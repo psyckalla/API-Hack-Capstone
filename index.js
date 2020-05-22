@@ -90,6 +90,8 @@ function watchAddForm() {
         const addTask = $('#add-task').val();
         const rateTask = $('#importance').val();
         addItems(addTask, rateTask);
+        $('input:text').val("");
+        
     });
    
       console.log('watchaddform ran');
