@@ -3,7 +3,6 @@
 const apikey = '0cefe77730501ffa5370c7079f559a9a';
 const CORS = 'https://cors-anywhere.herokuapp.com/';
 
-const midURL = 'json?apikey=0cefe77730501ffa5370c7079f559a9a&';
 
 //add items to list and rate importance
 function addItems(items, importance) {
@@ -17,6 +16,7 @@ function addItems(items, importance) {
 
     const queryURL = formatAddItemQuery(params);
     const fullURL = addItemAPIURL + '?' + queryURL;
+    console.log(fullURL);
     
     fetch(CORS+fullURL)
         .then(response => {
@@ -25,16 +25,16 @@ function addItems(items, importance) {
             }
             throw new Error(response.statusText);
         })
-        .then(responseJson => displayAddItems(responseJson, importance))
+        .then(responseJson => displayAddItems(responseJson, importance, items))
         .catch(err => {
             alert(`Something went wrong: ${err.message}`)
         });
 }
 
-function displayAddItems(responseJson, importance) {
+function displayAddItems(responseJson, importance, items) {
     console.log(responseJson);
-    $(`.${importance}`).html(`<form class="${responseJson.DRS_Success.message} deleteItem">
-    <p class="${responseJson.DRS_Success.message}">Thing</p>
+    $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem">
+    <p class="${responseJson.DRS_Success.message}">${items}</p>
     <select>
         <option value="${responseJson.DRS_Success.message}">Delete</option>
     </select>
@@ -70,6 +70,7 @@ function formatAddItemQuery(params) {
 function watchDeleteForm() {
     $('.deleteItem').submit(event => {
         event.preventDefault();
+        console.log('delete ran');
     });
     console.log('watchdeleteform ran');
 };
@@ -88,5 +89,9 @@ function watchAddForm() {
       console.log('watchaddform ran');
 };
   
-$(watchAddForm());
-$(watchDeleteForm());
+function runAllFunctions() {
+    $(watchAddForm());
+    $(watchDeleteForm());
+}
+
+$(runAllFunctions());
