@@ -8,31 +8,47 @@
             <h1>To Do List</h1>
         </header>
         <main>
-            <form>
+            <form class="add">
                 <label for="add-task">Add task:</label>
-                <input id="add-task" name="add-task">
-                <label for="submit"></label>
-                <input id="submit" name="submit" value="Submit" type="button">
+                <input id="add-task" name="add-task" type="text">
+                <select name="importance" id="importance">
+                    <option value="62087">Urgent and Important</option>
+                    <option value="62088">Urgent and Unimportant</option>
+                    <option value="62089">Not Urgent and Important</option>
+                    <option value="62090">Not Urgent and Unimportant</option>
+                </select>
+                <label for="submit-button"></label>
+                <input id="submit-button" name="submit-button" value="Submit" type="submit">
 
             </form>
+            <p id="js-error-message"></p>
             <div class="boxes-one-and-two">
                 <div class="box-one">
-                    <section class="js-high-urgent"></section>
+                    <h2>Urgent and Important</h2>
+                    <section class="js-urgent-important 62087"></section>
+
+                    
+                    
+                    
+
 
                 </div>
                 <div class="box-two">
-                    <section class="js-high-not-urgent"></section>
+                    <h2>Urgent and Unimportant</h2>
+                    <section class="js-urgent-unimportant 62088"></section>
 
                 </div>
 
             </div>
             <div class="boxes-three-and-four">
                 <div class="box-three">
-                    <section class="js-low-urgent"></section>
+                    <h2>Not Urgent and Important</h2>
+                    <section class="js-not-urgent-important 62089"></section>
 
                 </div>
                 <div class="box-four">
-                    <section class="js-low-not-urgent">
+                    <h2>Not Urgent and Unimportant</h2>
+                    <section class="js-not-urgent-unimportant 62090">
 
                     </section>
 
