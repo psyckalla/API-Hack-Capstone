@@ -85,7 +85,7 @@ function addItems(items, importance) {
 function displayAddItems(responseJson, importance, items) {
     console.log(responseJson);
     $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem">
-    <input type="checkbox"  value="0" class="${responseJson.DRS_Success.message}> <p class="${responseJson.DRS_Success.message}">${items}</p>
+    <input type="checkbox" id="${responseJson.DRS_Success.message}"  value="0" class="${responseJson.DRS_Success.message}> <p class="${responseJson.DRS_Success.message}">${items}</p>
     <select class="deletion">
         <option value="${responseJson.DRS_Success.message}">Delete</option>
     </select>
@@ -98,24 +98,28 @@ function displayAddItems(responseJson, importance, items) {
 }
 
 //update item that is checked to be completed
-function updateAPIStatusofCheckedItem () {
+function updateAPIStatusofCheckedItem (value) {
+
 
 }
 
+
+
 function updateStatusofCheckedItem() {
-    console.log($('input:checkbox').val());
+   
     $('input:checkbox').click('on', function(event) {
-        if ($('input:checkbox').val() === 0) {
-            $('input:checkbox').attr("value", 1);
+
+        if ($(this).val() == 0) { //couldn't use '==='
+            $(this).attr("value", 1);
             console.log($('input:checkbox').val());
-        } else if ($('input:checkbox').val() === 1) {
-            $('input:checkbox').attr("value", 0)
-            console.log($('input:checkbox').val());
+        } else if ($(this).val() == 1) {
+            $(this).attr("value", 0);
+            console.log($(this).val());
 
         };
         
-        console.log($('input:checkbox').val());
     });
+    updateAPIStatusofCheckedItem($('input:checkbox').val());
 }
 
 //formats the query
