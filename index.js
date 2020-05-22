@@ -35,12 +35,13 @@ function displayAddItems(responseJson, importance, items) {
     console.log(responseJson);
     $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem">
     <p class="${responseJson.DRS_Success.message}">${items}</p>
-    <select>
+    <select class="deletion">
         <option value="${responseJson.DRS_Success.message}">Delete</option>
     </select>
     <label for="delete-button"></label>
     <input type="submit" value="Delete" name="delete-button" id="delete-button">
-</form>`)
+    </form>`)
+    $(watchDeleteForm());
 
 }
 
@@ -58,7 +59,10 @@ function formatAddItemQuery(params) {
 
 
 //delete items from list
+function deleteFromList(itemToDelete) {
+    $(`.${itemToDelete}`).empty(`.${itemToDelete}`);
 
+}
 
 //change importance
 
@@ -71,6 +75,8 @@ function watchDeleteForm() {
     $('.deleteItem').submit(event => {
         event.preventDefault();
         console.log('delete ran');
+        const itemToDelete = $('.deletion').val();
+        deleteFromList(itemToDelete);
     });
     console.log('watchdeleteform ran');
 };
@@ -91,7 +97,7 @@ function watchAddForm() {
   
 function runAllFunctions() {
     $(watchAddForm());
-    $(watchDeleteForm());
+    
 }
 
 $(runAllFunctions());
