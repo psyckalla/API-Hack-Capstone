@@ -4,8 +4,158 @@
     padding: 0;
 }
 
+h1 {
+    font-size: 48px;
+    text-align: center;
+    font-family: 'Noto Sans TC', sans-serif;
+    border: 5px dotted blue;
+}
+
+h2 {
+    font-size: 32px;
+    margin-left: 40px;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 20px;
+}
+
+h3 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+
+}
+
+input, select {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+}
+
+form {
+    display: flex;
+    padding: 10px;
+    align-items: flex-start;
+    justify-content: space-evenly;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+
+}
+
+form.add  {
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    font-family: 'Roboto', sans-serif;
+}
+
+input.add, #importance {
+    width: 90%;
+    border: 1px solid black;
+}
+
 .box-one, .box-two, .box-three, .box-four {
     border: 1px solid black;
     width: 300px;
     height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+.box-one {
+    background: rgb(132, 233, 132);
+}
+
+.box-two {
+    background: rgb(226, 231, 150)
+}
+
+.box-three {
+    background: rgb(230, 225, 168)
+}
+
+.box-four {
+    background: rgb(209, 133, 133)
+}
+
+p.checked {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.debugger {
+    background: black;
+}
+
+@media screen and (min-width: 600px) {
+    h1 {
+        border-bottom: 5px dotted blue;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+    }
+
+    h2 {
+        margin-left: 100px;
+    }
+
+    form.add {
+        margin-left: 100px;
+    }
+
+    input.add, #importance {
+        width: 40%;
+        border: 1px solid black;
+    }
+    
+    .boxes-one-and-two, .boxes-three-and-four {
+        display: flex;
+        justify-content: center;
+        
+    }
+
+    .box-one, .box-two, .box-three, .box-four {
+        margin: 0;
+    }
+
+    .box-one {
+        border-radius: 10px 0 0 0;
+    }
+
+    .box-two {
+        border-radius: 0 10px 0 0;
+    }
+
+    .box-three {
+        border-radius: 0 0 0 10px ;
+    }
+
+    .box-four {
+        border-radius:  0 0 10px 0;
+    }
+
+}
+
+@media screen and (min-width: 820px) {
+    h2, form.add {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+    }
+
+    input.add, #importance {
+        width: 30%;
+        border: 1px solid black;
+    }
+
 }

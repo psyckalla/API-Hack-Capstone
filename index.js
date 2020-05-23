@@ -132,9 +132,6 @@ function updateStatusofCheckedItem() {
         const idOfItem = classOfItem.slice(0, 6);
 
         if ($(this).val() == 0) { //couldn't use '==='
-
-            
-
             $(this).attr("value", 1);
             $(this).siblings().addClass("checked");
             console.log($('input:checkbox').val());
