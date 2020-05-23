@@ -84,7 +84,7 @@ function addItems(items, importance) {
 
 function displayAddItems(responseJson, importance, items) {
     console.log(responseJson);
-    $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem" id="${responseJson[i].todos[a].todo_id}">
+    $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem" id="${responseJson.DRS_Success.message}">
     <input type="checkbox"  value="0" class="${responseJson.DRS_Success.message}"> <p class="${responseJson.DRS_Success.message}">${items}</p>
     <select class="deletion">
         <option value="${responseJson.DRS_Success.message}">Delete</option>
