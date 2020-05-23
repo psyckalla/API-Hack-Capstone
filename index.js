@@ -84,7 +84,7 @@ function addItems(items, importance) {
 
 function displayAddItems(responseJson, importance, items) {
     console.log(responseJson);
-    $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem">
+    $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem" id="${responseJson[i].todos[a].todo_id}">
     <input type="checkbox"  value="0" class="${responseJson.DRS_Success.message}"> <p class="${responseJson.DRS_Success.message}">${items}</p>
     <select class="deletion">
         <option value="${responseJson.DRS_Success.message}">Delete</option>
@@ -97,12 +97,44 @@ function displayAddItems(responseJson, importance, items) {
 
 }
 
+//updates API of item status 
+function updateAPIStatusofCheckedItem(status, id) {
+    console.log('updateAPIStatusofCheckedItem ran');
+
+    const params = {
+        apikey: apikey, 
+        todo_id: id,
+        status: status
+    }
+
+    const updateStatusURL = "http://beta.dorisapp.com/api/1_0/tasks/update_status.json";
+    const queryURL = formatAddItemQuery(params);
+    const fullURL = updateStatusURL + '?' + queryURL;
+
+    fetch(CORS+fullURL)
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .catch(err => {
+            alert(`Something went wrong: ${err.message}`)
+        });
+}
+
 //update item that is checked to be completed
 function updateStatusofCheckedItem() {
    
     $('input:checkbox').click('on', function(event) {
 
+        const classOfItem = $(this).parent('form').attr("class");
+        const idOfItem = classOfItem.slice(0, 6);
+
         if ($(this).val() == 0) { //couldn't use '==='
+
+            
+
             $(this).attr("value", 1);
             $(this).siblings().addClass("checked");
             console.log($('input:checkbox').val());
@@ -112,9 +144,9 @@ function updateStatusofCheckedItem() {
             console.log($(this).val());
 
         };
-        
+        updateAPIStatusofCheckedItem($('input:checkbox').val(), idOfItem);
     });
-   // updateAPIStatusofCheckedItem($('input:checkbox').val());
+    
 }
 
 
