@@ -35,16 +35,16 @@ function displayPreviousItems(responseJson) {
     
     for (let i = 0; i < responseJson.length; i++) {
         for (let a = 0; a < responseJson[i].todos.length; a++) {
-            if (responseJson[i].todos[a].todo_id !== undefined) {
-                $(`.${responseJson[i].todos[a].todo_group_id}`).append(`<form class="${responseJson[i].todos[a].todo_id} deleteItem">
-                <input type="checkbox"  value="0" class="${responseJson[i].todos[a].todo_id}> <p class="${responseJson[i].todos[a].todo_id}">${responseJson[i].todos[a].description}</p>
-                <select class="deletion">
-                <option value="${responseJson[i].todos[a].todo_id}">Delete</option>
-                </select>
-                <label for="delete-button"></label>
-                <input type="submit" value="Delete" name="delete-button" id="delete-button">
-                </form>`)
-            }
+            
+            $(`.${responseJson[i].todos[a].todo_group_id}`).append(`<form class="${responseJson[i].todos[a].todo_id} deleteItem" id="${responseJson[i].todos[a].todo_id}">
+            <input type="checkbox"  value="0" class="${responseJson[i].todos[a].todo_id}"> <p class="${responseJson[i].todos[a].todo_id}">${responseJson[i].todos[a].description}</p>
+            <select class="deletion">
+            <option value="${responseJson[i].todos[a].todo_id}">Delete</option>
+            </select>
+            <label for="delete-button"></label>
+            <input type="submit" value="Delete" name="delete-button" id="delete-button">
+            </form>`)
+            
         }
     }
 
@@ -85,7 +85,7 @@ function addItems(items, importance) {
 function displayAddItems(responseJson, importance, items) {
     console.log(responseJson);
     $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem">
-    <input type="checkbox" id="${responseJson.DRS_Success.message}"  value="0" class="${responseJson.DRS_Success.message}> <p class="${responseJson.DRS_Success.message}">${items}</p>
+    <input type="checkbox"  value="0" class="${responseJson.DRS_Success.message}"> <p class="${responseJson.DRS_Success.message}">${items}</p>
     <select class="deletion">
         <option value="${responseJson.DRS_Success.message}">Delete</option>
     </select>
@@ -98,29 +98,25 @@ function displayAddItems(responseJson, importance, items) {
 }
 
 //update item that is checked to be completed
-function updateAPIStatusofCheckedItem (value) {
-
-
-}
-
-
-
 function updateStatusofCheckedItem() {
    
     $('input:checkbox').click('on', function(event) {
 
         if ($(this).val() == 0) { //couldn't use '==='
             $(this).attr("value", 1);
+            $(this).siblings().addClass("checked");
             console.log($('input:checkbox').val());
         } else if ($(this).val() == 1) {
             $(this).attr("value", 0);
+            $(this).siblings().removeClass("checked");
             console.log($(this).val());
 
         };
         
     });
-    updateAPIStatusofCheckedItem($('input:checkbox').val());
+   // updateAPIStatusofCheckedItem($('input:checkbox').val());
 }
+
 
 //formats the query
 function formatAddItemQuery(params) {
@@ -134,7 +130,6 @@ function formatAddItemQuery(params) {
 
 //delete items from list
 function deleteFromList(itemToDelete) {
-    $(`.${itemToDelete}`).empty(`.${itemToDelete}`);
 
     const params = {
         apikey: apikey,
@@ -169,7 +164,9 @@ function deleteFromList(itemToDelete) {
 function watchDeleteForm() {
     $('.deleteItem').submit(event => {
         event.preventDefault();
-        const itemToDelete = $('.deletion').val();
+        $(event.target).empty(event.target);
+        const itemToDelete = event.target.id;
+        console.log(itemToDelete);
         deleteFromList(itemToDelete);
     });
     console.log('watchdeleteform ran');
