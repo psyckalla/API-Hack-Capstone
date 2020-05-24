@@ -6,6 +6,32 @@ const CORS = 'https://cors-anywhere.herokuapp.com/';
 
 //show all added items
 
+function displayHistory() {
+
+    const params = {
+        apikey: apikey,
+        count: 6
+    };
+
+    const displayHistoryAPIURL = 'http://beta.dorisapp.com/api/1_0/tasks/view_history.json';
+    const queryURL = formatAddItemQuery(params);
+    const fullURL = displayHistoryAPIURL + '?' + queryURL;
+    console.log(fullURL);
+
+    fetch(CORS+fullURL)
+        .then(response =>  {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => displayHistoryItems(responseJson))
+        .catch(err => {
+            alert(`Something went wrong: ${err.message}`)
+        });
+}
+
+
 function loadAllPreviousItems() {
 
     const params = {
@@ -30,6 +56,25 @@ function loadAllPreviousItems() {
         });
 }
 
+function displayHistoryItems(responseJson) {
+
+    
+    for (let i = 0; i < responseJson.length; i++) {
+       
+            
+            $(`.${responseJson[i].todo_group_id}`).append(`<form class="${responseJson[i].todo_id} deleteItem" id="${responseJson[i].todo_id}">
+            <input type="checkbox" checked  value="1" class="${responseJson[i].todo_id}"> <p class="${responseJson[i].todo_id} checked">${responseJson[i].description}</p>
+            
+            <label for="delete-button"></label>
+            <input type="submit" value="Delete" name="delete-button" class="delete-button">
+            </form>`)
+            
+        
+    }
+
+    $(watchDeleteForm());
+    $(updateStatusofCheckedItem());
+}
 
 function displayPreviousItems(responseJson) {
     
@@ -38,11 +83,9 @@ function displayPreviousItems(responseJson) {
             
             $(`.${responseJson[i].todos[a].todo_group_id}`).append(`<form class="${responseJson[i].todos[a].todo_id} deleteItem" id="${responseJson[i].todos[a].todo_id}">
             <input type="checkbox"  value="0" class="${responseJson[i].todos[a].todo_id}"> <p class="${responseJson[i].todos[a].todo_id}">${responseJson[i].todos[a].description}</p>
-            <select class="deletion">
-            <option value="${responseJson[i].todos[a].todo_id}">Delete</option>
-            </select>
+            
             <label for="delete-button"></label>
-            <input type="submit" value="Delete" name="delete-button" id="delete-button">
+            <input type="submit" value="Delete" name="delete-button" class="delete-button">
             </form>`)
             
         }
@@ -52,7 +95,9 @@ function displayPreviousItems(responseJson) {
     $(updateStatusofCheckedItem());
 }
 
-
+{/* <select class="deletion">
+            <option value="${responseJson[i].todos[a].todo_id}">Delete</option>
+            </select> */}
 
 
 //add items to list and rate importance
@@ -69,7 +114,9 @@ function addItems(items, importance) {
     const fullURL = addItemAPIURL + '?' + queryURL;
     console.log(fullURL);
     
-    fetch(CORS+fullURL)
+    fetch(CORS+fullURL, {
+        method: 'POST'
+    })
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -80,22 +127,23 @@ function addItems(items, importance) {
         .catch(err => {
             alert(`Something went wrong: ${err.message}`)
         });
+
 }
 
 function displayAddItems(responseJson, importance, items) {
     console.log(responseJson);
-    $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem" id="${responseJson[i].todos[a].todo_id}">
+    $(`.${importance}`).append(`<form class="${responseJson.DRS_Success.message} deleteItem" id="${responseJson.DRS_Success.message}">
     <input type="checkbox"  value="0" class="${responseJson.DRS_Success.message}"> <p class="${responseJson.DRS_Success.message}">${items}</p>
-    <select class="deletion">
-        <option value="${responseJson.DRS_Success.message}">Delete</option>
-    </select>
+    
     <label for="delete-button"></label>
-    <input type="submit" value="Delete" name="delete-button" id="delete-button">
+    <input type="submit" value="Delete" name="delete-button" class="delete-button">
     </form>`)
     $(watchDeleteForm());
     $(updateStatusofCheckedItem());
 
 }
+
+
 
 //updates API of item status 
 function updateAPIStatusofCheckedItem(status, id) {
@@ -111,7 +159,9 @@ function updateAPIStatusofCheckedItem(status, id) {
     const queryURL = formatAddItemQuery(params);
     const fullURL = updateStatusURL + '?' + queryURL;
 
-    fetch(CORS+fullURL)
+    fetch(CORS+fullURL, {
+        method: 'POST'
+    })
         .then(response => {
             if (response.ok) {
                 return response.json();
@@ -170,30 +220,39 @@ function deleteFromList(itemToDelete) {
     const fullURL = deleteItemAPIURL + '?' + queryURL;
     console.log(fullURL);
 
-    fetch(CORS+fullURL)
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            }
-            throw new Error(response.statusText);
-        })
-        .catch(err => {
-            alert(`Something went wrong: ${err.message}`)
-        });
+    fetch(CORS+fullURL, {
+        method: 'POST'
+    })
+
+        // .then(response => {
+            // if (response.ok) {
+            //     return response.json();
+            // }
+            // throw new Error(response.statusText);
+      //  })
+        // .catch(err => {
+        //     alert(`Something went wrong: ${err.message}`)
+        // });
 
 }
 
-//change importance
+function watchHistoryForm() {
+    $('.history').submit(event => {
+        event.preventDefault();
+        console.log('history ran');
+        displayHistory();
+    })
+}
 
 
-//sort items
+
 
 //watch delete button
 
 function watchDeleteForm() {
     $('.deleteItem').submit(event => {
         event.preventDefault();
-        $(event.target).empty(event.target);
+        $(event.target).addClass('hidden');
         const itemToDelete = event.target.id;
         console.log(itemToDelete);
         deleteFromList(itemToDelete);
@@ -220,6 +279,7 @@ function watchAddForm() {
 function runAllFunctions() {
     $(loadAllPreviousItems());
     $(watchAddForm());
+    $(watchHistoryForm());
     
     
 }

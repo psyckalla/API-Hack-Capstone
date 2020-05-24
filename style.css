@@ -4,6 +4,62 @@
     padding: 0;
 }
 
+input[type="text"], select {
+    padding:10px 20px;
+    
+    border-radius:5px;
+	border:2px solid #0a0a0a;
+    
+}
+
+select, input[type="checkbox"] {
+    cursor: pointer;
+}
+
+input[type="submit"] {
+    padding: 1px 5px;
+    background-color:#79bbff;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:20px;
+    font-weight:bold;
+    text-shadow:0px 1px 0px #528ecc;
+}
+
+input[type="submit"].add, input[type="submit"].history {
+	box-shadow: 3px 5px 0px 0px #4a3988;
+	background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+	background-color:#79bbff;
+	border-radius:5px;
+	border:1px solid #337bc4;
+	display:inline-block;
+	cursor:pointer;
+	color:#050505;
+	font-family:Verdana;
+	font-size:20px;
+	font-weight:bold;
+	padding:10px 20px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #528ecc;
+}
+input[type="submit"]:hover {
+	background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+	background-color:#378de5;
+}
+
+input[type="submit"].history {
+    background-color: #9bc8f5;
+    background:linear-gradient(to bottom, #bcd7f3 5%, #71ace7 100%);
+    box-shadow: 3px 5px 0px 0px #122070;
+
+}
+
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
 h1 {
     font-size: 48px;
     text-align: center;
@@ -16,6 +72,7 @@ h2 {
     margin-left: 40px;
     font-family: 'Roboto', sans-serif;
     margin-top: 20px;
+    font-weight: bolder;
 }
 
 h3 {
@@ -25,6 +82,11 @@ h3 {
     text-align: center;
     padding: 10px;
 
+}
+
+p, label, select {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 input, select {
@@ -48,7 +110,7 @@ form {
 
 }
 
-form.add  {
+form.add, form.history {
     font-size: 20px;
     display: flex;
     flex-direction: column;
@@ -56,19 +118,25 @@ form.add  {
     font-family: 'Roboto', sans-serif;
 }
 
-input.add, #importance {
+input.add, #importance, input.history {
     width: 90%;
     border: 1px solid black;
+}
+
+.hidden {
+    display: none;
 }
 
 .box-one, .box-two, .box-three, .box-four {
     border: 1px solid black;
     width: 300px;
-    height: 300px;
+    min-height: 300px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
     border-radius: 10px;
+    overflow-wrap: break-word;
+    overflow-wrap: ;
 }
 
 .box-one {
@@ -92,9 +160,7 @@ p.checked {
     opacity: 0.5;
 }
 
-.debugger {
-    background: black;
-}
+
 
 @media screen and (min-width: 600px) {
     h1 {
@@ -108,11 +174,11 @@ p.checked {
         margin-left: 100px;
     }
 
-    form.add {
+    form.add, form.history {
         margin-left: 100px;
     }
 
-    input.add, #importance {
+    input.add, #importance, input.history {
         width: 40%;
         border: 1px solid black;
     }
@@ -146,16 +212,24 @@ p.checked {
 }
 
 @media screen and (min-width: 820px) {
-    h2, form.add {
+    h2, form.add, form.history {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin: 0;
     }
 
-    input.add, #importance {
+    input.add, #importance, input.history {
         width: 30%;
         border: 1px solid black;
+    }
+
+    .box-one, .box-two, .box-three, .box-four {
+        margin: 0;
+        resize: both;
+        overflow: auto;
+        width: 400px;
+        min-height: 300px;
     }
 
 }
